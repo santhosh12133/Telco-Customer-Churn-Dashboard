@@ -1,0 +1,89 @@
+
+---
+
+## 📂 Dataset
+
+- 📥 **Source**: [Kaggle - Telco Customer Churn Dataset](https://www.kaggle.com/blastchar/telco-customer-churn)
+- 👥 7,043 customer records
+- 🎯 Target variable: `Churn` (Yes/No)
+
+---
+
+## 🧹 Data Cleaning & Preprocessing (Python)
+
+- Converted `TotalCharges` from object to float
+- Handled missing values using median imputation
+- Dropped irrelevant columns like `customerID`
+- Encoded categorical variables with `LabelEncoder`
+- Applied `SMOTE` to balance the class distribution
+
+---
+
+## 🤖 Modeling
+
+- Model used: **RandomForestClassifier**
+- Training with balanced data (`SMOTE`)
+- Evaluation on test data:
+  - ✅ Accuracy: ~82–84%
+  - ✅ ROC-AUC: ~0.84–0.86
+- Used `confusion_matrix`, `accuracy_score`, and `roc_auc_score` for evaluation
+
+---
+
+## 📊 Power BI Dashboard Features
+
+- Donut chart showing overall churn rate  
+- Stacked bar chart: churn by contract type  
+- Histogram: tenure distribution among churners  
+- Boxplots: MonthlyCharges and TotalCharges by churn  
+- Slicers to filter by services, payment method, and demographics  
+
+> 📁 File: `Telco_Churn_Dashboard.pbix`
+
+---
+
+## 📈 Sample Visuals
+
+![Churn by Contract Type](visuals/churn_by_contract.png)
+
+---
+
+## 💡 Key Insights
+
+- Customers with **month-to-month contracts** churn the most  
+- Short tenure customers (less than 6 months) are at **high churn risk**  
+- High churn among users **without Online Security or Tech Support**  
+- **Paperless billing** linked to higher churn rates
+
+---
+
+## 🛠️ Tools & Technologies
+
+- Python (pandas, seaborn, scikit-learn, imblearn)
+- Power BI for dashboarding
+- Jupyter Notebook / VS Code
+
+---
+
+## 📌 How to Use
+
+1. Clone this repository  
+2. Open and run `churn_model.py` to train the model  
+3. Open `Telco_Churn_Dashboard.pbix` in Power BI Desktop  
+4. Connect it to `cleaned_churn_data.csv` to refresh visuals
+
+---
+
+## 🙌 Acknowledgements
+
+- [Kaggle - Telco Customer Churn Dataset](https://www.kaggle.com/blastchar/telco-customer-churn)
+- Community insights and support
+
+---
+
+## 🔗 Connect with Me
+
+Feel free to connect or reach out on:
+
+- 💼 [LinkedIn](https://www.linkedin.com/in/yourprofile/)
+- 💻 [GitHub](https://github.com/yourusername)
