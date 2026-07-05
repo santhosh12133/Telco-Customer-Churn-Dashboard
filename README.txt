@@ -1,53 +1,90 @@
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-import seaborn as sns
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import LabelEncoder, StandardScaler
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import accuracy_score, confusion_matrix, roc_auc_score
-from imblearn.over_sampling import SMOTE
+Telco Customer Churn Dashboard
 
-df = pd.read_csv("C:/Users/teju4/Desktop/WA_Fn-UseC_-Telco-Customer-Churn.csv")
-print("imported sucessfully")
-print(df.head)
+This project analyzes telecom customer churn using Python for preprocessing/modeling and Power BI for interactive visualization.
 
-df.info()
-# Convert TotalCharges to numeric
-df['TotalCharges'] = pd.to_numeric(df['TotalCharges'], errors='coerce')
+========================================
+DATASET
+========================================
 
-# Fill missing values (no inplace)
-df['TotalCharges'] = df['TotalCharges'].fillna(df['TotalCharges'].median())
+- Source: Kaggle - Telco Customer Churn Dataset
+  https://www.kaggle.com/blastchar/telco-customer-churn
+- Records: 7,043 customers
+- Target variable: Churn (Yes/No)
 
+========================================
+DATA CLEANING & PREPROCESSING (PYTHON)
+========================================
 
-sns.countplot(x='Churn', data=df)
-sns.boxplot(x='Churn', y='MonthlyCharges', data=df)
+- Converted TotalCharges from object to numeric
+- Handled missing values using median imputation
+- Dropped irrelevant columns such as customerID
+- Encoded categorical features using LabelEncoder
+- Applied SMOTE to balance churn classes
 
-le = LabelEncoder()
-for col in df.select_dtypes(include='object'):
-    df[col] = le.fit_transform(df[col])
+========================================
+MODELING
+========================================
 
-X = df.drop(['customerID','Churn'], axis=1)
-y = df['Churn']
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-print("data splited sucessfull")
+- Model: RandomForestClassifier
+- Trained on SMOTE-balanced training data
+- Evaluated with:
+  - accuracy_score
+  - roc_auc_score
+  - confusion_matrix
 
-sm = SMOTE(random_state=42)
-X_train_res, y_train_res = sm.fit_resample(X_train, y_train)
+Expected performance range:
+- Accuracy: ~82% to 84%
+- ROC-AUC: ~0.84 to 0.86
 
-clf = RandomForestClassifier(random_state=42)
-clf.fit(X_train_res, y_train_res)
-print("model train sucessful")
+========================================
+POWER BI DASHBOARD FEATURES
+========================================
 
-y_pred = clf.predict(X_test)
-print("Accuracy:", accuracy_score(y_test, y_pred))
-print("ROC-AUC:", roc_auc_score(y_test, clf.predict_proba(X_test)[:,1]))
-sns.heatmap(confusion_matrix(y_test, y_pred), annot=True, fmt='d')
+- Donut chart: overall churn rate
+- Stacked bar chart: churn by contract type
+- Histogram: tenure distribution among churned customers
+- Boxplots: MonthlyCharges and TotalCharges by churn
+- Interactive slicers:
+  - service types
+  - payment method
+  - demographics
 
-# Save the cleaned and processed dataset to a new CSV file
-df.to_csv("C:/Users/teju4/Desktop/cleaned_churn_data.csv", index=False)
+Dashboard file:
+- Telco_Churn_Dashboard.pbix
 
-print("✅ Cleaned dataset saved successfully to Desktop!")
+========================================
+KEY INSIGHTS
+========================================
 
+- Month-to-month contract customers churn the most
+- Customers with tenure below 6 months are at high churn risk
+- Churn is higher among customers without Online Security or Tech Support
+- Paperless billing appears associated with higher churn rates
 
+========================================
+TOOLS & TECHNOLOGIES
+========================================
 
+- Python
+  - pandas
+  - seaborn
+  - scikit-learn
+  - imbalanced-learn (SMOTE)
+- Power BI
+- Jupyter Notebook / VS Code
+
+========================================
+HOW TO USE
+========================================
+
+1. Clone the repository
+2. Run the churn modeling script (for example: churn_model.py)
+3. Open Telco_Churn_Dashboard.pbix in Power BI Desktop
+4. Connect/refresh using cleaned_churn_data.csv
+
+========================================
+ACKNOWLEDGEMENTS
+========================================
+
+- Kaggle Telco Customer Churn Dataset
+- Open-source community resources
